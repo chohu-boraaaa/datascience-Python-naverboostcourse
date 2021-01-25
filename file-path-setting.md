@@ -8,6 +8,9 @@
 # 파일 확인하기
 %ls
 
+# 주피터 노트북이 있는 폴더의 경로를 출력
+%pwd
+
 import pandas as pd
 
 # ()안에서 Shift+tab 키를 누르면 도움말을 볼 수 있다.
