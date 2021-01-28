@@ -151,3 +151,47 @@ print(df.shape)
 df.info()
 ```
 
+## 기초 통계값 보기
+
+### 기초 통계 수치
+
+```
+# 평균값
+df["위도"].mean()
+
+# 중앙값
+df["위도"].median()
+
+# 최댓값
+df["위도"].max()
+
+# 최솟값
+df["위도"].min()
+
+# 갯수
+df["위도"].count()
+```
+
+## 기초통계값 요약 - describe
+
+describe를 사용하면 데이터 요약 가능
+
+기본적으로 수치형 데이터 요약해서 보여줌
+
+데이터 갯수, 평균, 표준편차, 최솟값, 1사분위수(25%), 2사분위수(50%), 3사분위수(75%), 최댓값 볼 수 있음
+
+```
+# 위도를 describe로 요약
+df["위도"].describe()
+
+# 2개의 컬럼을 desribe로 요약
+df[["위도", "경도"]].describe()
+
+# describe로 문자열 데이터타입의 요약 보기
+# top : 가장 많이 등장한 object
+# include = "number"로 하면 숫자형 데이터
+df.describe(include="object")
+
+# include = "all"로 하면 숫자형 데이터 + 문자형데이터
+df.describe(include = "all")
+```
