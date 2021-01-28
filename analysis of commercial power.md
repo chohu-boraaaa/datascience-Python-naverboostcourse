@@ -86,3 +86,68 @@ df.columns
 # 데이터 타입만 출력
 df.dtypes
 ```
+
+## 결측치
+
+```
+# True가 결측치
+df.isnull().sum()
+
+# 각 컬럼별 결측치 개수
+null_count = df.isnull().sum()
+null_count
+
+# 위에서 구한 결측치를 .plot.bar를 통해 막대그래프로 표현
+# barh로 하면 그래프 수평적으로
+null_count.plot.barh(figsize=(5, 7))
+
+# 위에서 계산한 결측치 수를 reset_index를 통해 데이터 프레임으로 만들기
+# df_null_count 변수에 결과를 담아 head로 미리보기
+df_null_count = null_count.reset_index()
+df_null_count.head()
+```
+
+## 컬럼명 변경하기
+
+```
+# df_null_count 변수에 담겨있는 컬럼의 이름을 "컬럼명", "결측치수"로 변경
+df_null_count.columns = ["컬럼명", "결측치수"]
+df_null_count.head()
+```
+
+## 정렬하기
+
+```
+# df_null_count 데이터프레임에 있는 결측치수 컬럼을 sort_values를 통해 정렬
+# 결측치가 많은 순으로 상위 10개만 출력
+df_null_count.sort_values(by = "결측치수", ascending = False)
+df_null_count_top = df_null_count.sort_values(by = "결측치수", ascending = False).head(10)
+```
+
+## 특정 컬럼만 불러오기
+
+```
+# 지점명 컬럼을 불러오기
+# NaN == Not a Number의 약자로 결측치 의미
+df["지점명"].head()
+
+# "컬럼명"이라는 컬럼의 값만 가져와서 drop_columns라는 변수에 담기
+drop_columns = df_null_count_top["컬럼명"].tolist()
+drop_columns
+
+# drop_columns 변수로 해당 컬럼 정보만 데이터프레임에서 가져오기
+df[drop_columns].head()
+```
+
+## 제거하기
+
+```
+# 행 기준으로 drop을 해줘야 하므로 axis = 1 지정
+print(df.shape)
+df = df.drop(drop_columns, axis = 1)
+print(df.shape)
+
+# 제거 결과를 info로 확인
+df.info()
+```
+
