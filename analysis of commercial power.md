@@ -172,7 +172,7 @@ df["위도"].min()
 df["위도"].count()
 ```
 
-## 기초통계값 요약 - describe
+### 기초통계값 요약 - describe
 
 describe를 사용하면 데이터 요약 가능
 
@@ -194,4 +194,51 @@ df.describe(include="object")
 
 # include = "all"로 하면 숫자형 데이터 + 문자형데이터
 df.describe(include = "all")
+```
+
+### 중복제거한 값 보기
+* unique로 중복을 제거한 값을 보고 nunique로 갯수를 세어보기
+
+```
+# "상권업종대분류명"
+df["상권업종대분류명"].unique()
+
+# 의료라는 데이터 한번 나옴
+df["상권업종대분류명"].nunique()
+
+# "상권업종중분류명"
+df["상권업종중분류명"].unique()
+
+df["상권업종중분류명"].nunique()
+
+# "상권업종소분류명"
+df["상권업종소분류명"].unique()
+
+df["상권업종소분류명"].nunique()
+
+# unique대신 len을 사용할 수도 있음
+len(df["상권업종소분류명"].unique())
+```
+
+### 그룹화된 요약값 보기 - value_counts
+* value_counts를 사용하면 카테고리 형태의 데이터 갯수를 세어볼 수 있다.
+
+```
+# 시도코드 세어보기
+df["시도명"].head()
+
+# 시도명 세어보기
+city = df["시도명"].value_counts()
+city
+
+# normalize=True 옵션을 사용하면 비율을 구할 수 있다.
+city_normalize = df["시도명"].value_counts(normalize = True)
+city_normalize
+
+# Pandas에는 plot기능을 내장하고 있다.
+# 위에서 분석한 시도
+city.plot.barh()
+
+# 판다스의 plot.pie()를 사용해서 파이그래프 그리기
+city.plot.pie(figsize=(7,7))
 ```
