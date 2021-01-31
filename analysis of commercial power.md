@@ -241,4 +241,34 @@ city.plot.barh()
 
 # 판다스의 plot.pie()를 사용해서 파이그래프 그리기
 city.plot.pie(figsize=(7,7))
+
+# seaborn의 countplot으로 그려보기
+c = sns.countplot(data=df, y="시도명")
+
+# "상권업종대분류명"으로 갯수 세어보기
+df["상권업종대분류명"].value_counts()
+
+# "상권업종중분류명"으로 갯수 세어보기
+d = df["상권업종중분류명"].value_counts()
+d
+
+# normalize=True를 사용해 비율 구하기
+n = df["상권업종중분류명"].value_counts(normalize=True)
+n
+
+# 판다스의 plot.bar() 사용해서 막대그래프 그려보기
+# rot=0하면 글씨가 똑바로 보임
+d.plot.bar(rot=0)
+
+# 판다스의 plot.pie() 사용해서 파이그래프를 그려보기
+n.plot.pie()
+
+# "상권업종소분류명"에 대한 그룹화된 값을 카운트
+e = df["상권업종소분류명"].value_counts()
+e
+
+# "상권업종소분류명"으로 갯수 세어보기
+# 판다스의 plot.bar()를 사용해서 막대그래프 그리기
+e.plot.barh(figsize=(7,8), grid=True)
 ```
+
