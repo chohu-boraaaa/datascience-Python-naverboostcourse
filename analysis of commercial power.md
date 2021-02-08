@@ -321,3 +321,25 @@ df_seoul_drug = df[(df["상권업종소분류명"] == "약국") & (df["시도명
 print(df_seoul_drug.shape)
 df_seoul_drug.head(3)
 ```
+
+### 구별로 보기
+
+```
+# 위에서 색인한 데이터로 "시군구명"으로 그룹화해서 갯수 세어보기
+# 구별로 약국이 몇개가 있는지 확인해 보기
+c = df_seoul_drug["시군구명"].value_counts()
+c.head()
+
+# normalize = True를 통해 비율 구하기
+n = df_seoul_drug["시군구명"].value_counts(normalize=True)
+n.head()
+
+# 위에서 구한 결과를 판다스의 plot.bar()를 활용해 막대그래프로 그리기
+c.plot.bar(rot=60)
+
+# "상권업종소분류명"이 "종합병원"인 것과
+# "시도명"이 "서울특별시"인 데이터만 가져오기
+# 결과를 df_seoul_hospital 에 할당해서 재사용
+df_seoul_hospital = df[(df["상권업종소분류명"] == "종합병원") & (df["시도명"] == "서울특별시")].copy()
+df_seoul_hospital
+```
