@@ -342,4 +342,49 @@ c.plot.bar(rot=60)
 # 결과를 df_seoul_hospital 에 할당해서 재사용
 df_seoul_hospital = df[(df["상권업종소분류명"] == "종합병원") & (df["시도명"] == "서울특별시")].copy()
 df_seoul_hospital
+
+# "시군구명"으로 그룹화해서 구별로 종합병원의 수 세어보기
+df_seoul_hospital["시군구명"].value_counts()
+```
+
+### 텍스트 데이터 색인하기
+
+```
+# 색인하기 전에 상호명 중에 종합병원이 아닌 데이터 찾기
+df_seoul_hospital.loc[~df_seoul_hospital["상호명"].str.contains("종합병원"), "상호명"].unique()
+
+# 상호명에서 특정 단어가 들어가는 데이터만 가져오기 - 꽃배달
+df_seoul_hospital[df_seoul_hospital["상호명"].str.contains("꽃배달")]
+
+# 특정 단어가 들어가는 데이터만 가져오기 - 의료기
+df_seoul_hospital[df_seoul_hospital["상호명"].str.contains("의료기")]
+
+# "꽃배달|의료기|장례식장|상담소|어린이집"은 종합병원과 무관하기 때문에
+# 전처리를 위해 해당 텍스트를 한 번에 검색
+# 제거할 데이터의 인덱스만 drop_row에 담고 list 형태로 변환
+drop_row = df_seoul_hospital[df_seoul_hospital["상호명"].str.contains("꽃배달|의료기|장례식장|상담소|어린이집")].index
+drop_row = drop_row.tolist()
+drop_row
+
+# 의원으로 끝나는 데이터도 종합병원으로 볼 수 없기 때문에 인덱스 찾아서
+# drop_row2에 담아주고 list 형태로 변환
+drop_row2 = df_seoul_hospital[df_seoul_hospital["상호명"].str.endswith("의원")].index
+drop_row2 = drop_row2.tolist()
+drop_row2
+
+# 삭제할 행을 drop_row에 넣어주기
+drop_row = drop_row + drop_row2
+len(drop_row)
+
+# 해당 셀을 삭제하고 삭제 전과 후의 행의 갯수 비교
+# axis = 0 : 행 기준
+print(df_seoul_hospital.shape)
+df_seoul_hospital = df_seoul_hospital.drop(drop_row, axis=0)
+print(df_seoul_hospital.shape)
+
+# 시군구명에 따라 종합병원의 숫자를 countplot
+df_seoul_hospital["시군구명"].value_counts().plot.bar()
+```
+
+
 ```
