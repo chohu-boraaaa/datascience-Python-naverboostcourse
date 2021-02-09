@@ -384,7 +384,9 @@ print(df_seoul_hospital.shape)
 
 # 시군구명에 따라 종합병원의 숫자를 countplot
 df_seoul_hospital["시군구명"].value_counts().plot.bar()
-```
 
+plt.figure(figsize=(15, 4))
+sns.countplot(data=df_seoul_hospital, x="시군구명", order=df_seoul_hospital["시군구명"].value_counts().index)
 
+df_seoul_hospital["상호명"].unique()
 ```
