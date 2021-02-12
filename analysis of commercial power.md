@@ -390,3 +390,36 @@ sns.countplot(data=df_seoul_hospital, x="시군구명", order=df_seoul_hospital[
 
 df_seoul_hospital["상호명"].unique()
 ```
+
+### 특정 지역만 보기
+
+```
+# 서울에 있는 데이터의 위도와 경도를 보기
+# 결과를 df_seoul이라는 데이터프레임에 저장
+# 새로운 변수에 데이터프레임을 저장시 copy()를 사용
+df_seoul = df[df["시도명"] == "서울특별시"].copy()
+df_seoul.shape
+
+# seaborn의 countplot을 사용해서 위에서 만든 df_seoul 데이터 프레임의
+# 시군구명 시각화
+df_seoul["시군구명"].value_counts().plot.bar(figsize=(10,4),rot=30)
+
+# 시군구명을 seaborn의 countplot으로 그리기
+plt.figure(figsize=(15,4))
+sns.countplot(data=df_seoul, x="시군구명")
+
+# Pandas의 plot.scatter를 통해 경도와 위도 표시
+df_seoul[["경도","위도","시군구명"]].plot.scatter(x="경도", y="위도", figsize=(8,7), grid=True)
+
+# seaborn의 scatterplot을 통해 구별 경도와 위도 표시
+plt.figure(figsize=(9,8))
+sns.scatterplot(data=df_seoul,x="경도",y="위도",hue="시군구명")
+
+# seaborn의 scatterplot을 통해 "상권업종중분류명" 경도와 위도 표시
+plt.figure(figsize=(9,8))
+sns.scatterplot(data=df_seoul,x="경도",y="위도",hue="상권업종중분류명")
+
+# seaborn의 scatterplot을 통해 전국 데이터(df)로 구별 경도와 위도를 표시
+plt.figure(figsize=(18,12))
+sns.scatterplot(data=df[:40000], x="경도", y="위도", hue="시도명")
+```
