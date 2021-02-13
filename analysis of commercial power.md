@@ -423,3 +423,31 @@ sns.scatterplot(data=df_seoul,x="경도",y="위도",hue="상권업종중분류�
 plt.figure(figsize=(18,12))
 sns.scatterplot(data=df[:40000], x="경도", y="위도", hue="시도명")
 ```
+
+### Folium 사용예제
+* https://nbviewer.jupyter.org/github/python-visualization/folium/tree/master/examples/
+
+```
+# 아나콘다에서 folium을 사용하기 위해서는 별도 설치
+# https://anaconda.org/conda-forge/folium
+# conda install -c conda-forge folium
+# 지도 시각화를 위한 라이브러리
+import folium
+
+# 지도의 중심을 지정하기 위해 위도와 경도의 평균 구하기
+df_seoul_hospital["위도"].mean()
+df_seoul_hospital["경도"].mean()
+
+map = folium.Map(location=[df_seoul_hospital["위도"].mean(), df_seoul_hospital["경도"].mean()], 
+                   zoom_start=12)
+for n in df_seoul_hospital.index:
+    name = df_seoul_hospital.loc[n, "상호명"]
+    address = df_seoul_hospital.loc[n, "도로명주소"]
+    popup = f"{name}-{address}"
+    location = [df_seoul_hospital.loc[n, "위도"], df_seoul_hospital.loc[n, "경도"]]
+    folium.Marker(
+        location = location,
+        popup = popup,
+        ).add_to(map)
+map
+```
