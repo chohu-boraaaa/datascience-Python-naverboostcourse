@@ -422,6 +422,11 @@ sns.scatterplot(data=df_seoul,x="경도",y="위도",hue="상권업종중분류�
 # seaborn의 scatterplot을 통해 전국 데이터(df)로 구별 경도와 위도를 표시
 plt.figure(figsize=(18,12))
 sns.scatterplot(data=df[:40000], x="경도", y="위도", hue="시도명")
+
+# 경기도
+df_gg = df[df["시도명"]=="경기도"].copy()
+plt.figure(figsize=(13,14))
+sns.scatterplot(data=df_gg, x="경도", y="위도", hue="시군구명")
 ```
 
 ### Folium 사용예제
