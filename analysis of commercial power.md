@@ -456,3 +456,22 @@ for n in df_seoul_hospital.index:
         ).add_to(map)
 map
 ```
+
+### 자율주제를 세우고 직접 분석해보기
+* 상권업종중분류명, 상권업종소분류명 중에 관심 있는 분류명을 색인 후에 시도별, 시군구별 분석을 해보기
+* 예시)
+    * 언어치료는 시군구별로 어디에 많이 위치할까?
+    * 의료시설은 서울과 강남에 집중되어 있을까?
+    * 강남에는 피부과, 성형외과가 다른 지역에 비해 많을까?
+    
+
+#### 언어치료는 시군구별로 어디에 많이 위치할까?
+```
+df_seoul_lgg = df[(df["상권업종소분류명"] == "언어치료") & (df["시도명"] == "서울특별시")].copy()
+df_seoul_lgg
+
+df_seoul_lgg["시군구명"].value_counts()
+
+plt.figure(figsize=(15, 4))
+sns.countplot(data=df_seoul_lgg, x="시군구명", order=df_seoul_lgg["시군구명"].value_counts().index)
+```
